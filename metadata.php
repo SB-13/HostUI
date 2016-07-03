@@ -25,7 +25,7 @@
 					   
 						echo '<table class="table table-bordered table-hover">';
 					   
-						while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 							$num = count($data);
 							if ($row == 1) {
 								echo '<thead><tr>';
