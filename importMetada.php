@@ -1,5 +1,4 @@
 <?php                          
-		echo 'this';
 	echo '<table class="table">                                
                                 <tbody>
                                     <tr>
