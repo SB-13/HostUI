@@ -5,6 +5,7 @@
 
 $t =time();
 $time = date("H:i:s",$t);
+echo 'work';
 
 //grab pressure transducer data
 $sensorTxt = "./sensorOutput.txt";
@@ -23,7 +24,7 @@ echo $coordSplit[0];
 $lat = $coordSplit[0];
 $lon = $coordSplit [1];
 
-
+//Write out to main mission CSV
 //Time | Temp | Depth | Lat | Lon | Heading |Pitch | Roll | Battery
 $list = array(
 	array($time, $tempFer, $feet, $lat, $lon)
@@ -37,4 +38,20 @@ foreach ($list as $fields) {
 }
 
 fclose($fp);
+
+
+//Write out to Target/Interest CSV
+//Target# |Time | Depth | Lat | Lon |
+$targetList = array(
+	array($time, $feet, $lat, $lon)
+);
+
+
+$tfp = fopen('targetList.csv', 'a');
+
+foreach ($targetList as $targetFields) {
+    fputcsv($tfp, $targetFields);
+}
+
+fclose($tfp);
 ?>

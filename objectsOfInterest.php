@@ -37,14 +37,14 @@
 				<br/>
 				<br/>
 				<br/>
-			      <div class="table-responsive">
+			      <div class="table">
                             
 				<?php
 
 					$row = 1;
-					if (($handle = fopen("./metadataInput.csv", "r")) !== FALSE) {
+					if (($handle = fopen("./targetList.csv", "r")) !== FALSE) {
 					   
-						echo '<table class="table table-bordered table-hover">';
+						echo '<table class="table table-bordered table">';
 					   
 						while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 							$num = count($data);
@@ -80,7 +80,7 @@
 						fclose($handle);
 					}
 				?>
-				</div><!-- end responsive table-->
+				</div><!-- end  table-->
 			</div> <!--end col-->
 		</div> <!--end page wrapper-->
 	</div><!--end wrapper-->

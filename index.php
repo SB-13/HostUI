@@ -57,15 +57,16 @@
 
     <div id="wrapper">
 
-        <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<a href="./metadata.php"><button type="button" class="btn btn-lg" padding:"20">Mission Metadata</button></a>   
-		<a href="./manual/index.php"> <button type="button" class="btn btn-lg" padding:"20">SB-13 User's Manual</button></a>
-		  <button type="button" class="btn btn-lg btn-danger">ABORT MISSION</button>
+<!-- Navigation -->
+        <nav class="navbar nav navbar-inverse navbar-fixed-top top-nav" role="navigation">
+			<li padding:"20"><a href="./index.php">Home</a> 
+			<li padding:"20"><a href="./metadata.php">Mission Metadata</a>   
+			<li padding:"20"><a href="./objectsOfInterest.php">Points of Interest</a></li>
+			<li padding:"20"><a href="./manual/index.php">SB-13 User's Manual</a></li>
+			 <button type="button" class="btn btn-lg btn-danger">ABORT MISSION</button>
         </nav>
-
+<!-- End Navigation-->
         <div id="page-wrapper">
-
             <div class="container-fluid">            
                     <div class="col-lg-6">   
 					
@@ -80,8 +81,8 @@
 
 		<div id="map"></div>
 		<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-		<script>
-			var map = L.map('map').setView([28.51155, -81.153878333], 14);
+		<script>		
+			var map = L.map('map').setView([38.8029693,-77.5178039], 18);
 			mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 			L.tileLayer ('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '© ' + mapLink + ' Contributors',
@@ -161,7 +162,7 @@
 			});
 		</script>
 		<!-- <textarea id="coordstoput" rows="2" cols="30"></textarea> -->
-		<img src="images/offline.png" id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlenghth="15" placeholder="RPI IP Address" name="ip" id="ip">
+		<img src="images/offline.png" id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlenghth="15" placeholder="Rasp Pi IP Address" name="ip" id="ip">
 		<input type="button" value="Track" id="startTrack">
 
 <!-- End GPS Map -->
@@ -173,96 +174,86 @@
                                 <div class="row">
 									<h3 class = "panel-title"> <i class="fa fa-long-arrow-right"></i>  Telemetry Data</h3>
                                 </div>
-                            </div>             
-                        <div class="table-responsive">
-                            <table class="table table-hover">                                
-                                <tbody>
-                                    <tr>
-                                        <td>Water Temp</td>
-                                        <td>
-										<?php
-										echo file_get_contents("./watertemp.txt");
-										?> 
-										</td>                                       
-                                    </tr>
-                                    <tr>
-                                        <td>USS Depth</td>
-                                        <td>
-										<?php
-										echo file_get_contents("./depth.txt");
-										?> 
-										</td>                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Buoy Location</td>
-                                        <td> 
-										<?php
-										$coords = file_get_contents("./coords.txt");
-										echo $coords;
-										?> 
-										</td>                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Heading</td>
-                                        <td>
-										<?php
-										echo file_get_contents("./heading.txt");
-										?> 
-										</td>                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Pitch</td>
-                                        <td>
-										<?php
-										echo file_get_contents("./pitch.txt");
-										?> 
-										<td>                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Roll</td>
-                                        <td>
-										<?php
-										echo file_get_contents("./roll.txt");
-										?> 
-										</td>                                      
-                                    </tr>
-                                    <tr>
-                                        <td>Battery Percentage</td>
-                                        <td>55% Remaining  
-										<!--Battery graphic-->
-											<div class="progress" class = col-lg-6>									
-												<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" style="width: 55%"><span class="sr-only">55% Complete (warning)</span>
-												</div>
-											</div>
-										</td>                                       
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>         					
+                            </div>      
+                        <div id = "result" class="table"></div>     							
+						<script
+											src="https://code.jquery.com/jquery-3.0.0.slim.js"
+											integrity="sha256-Gp6hp0H+A7axg1tErCucWeOc38irtkVWpUbBZSj8KCg="
+											crossorigin="anonymous">
+										</script>
+										<script>
+										function autoRefresh_div(){
+											  $("#result").load("importMetada.php");// a function which will load data from other file after x seconds
+										  }
+ 
+										setInterval('autoRefresh_div()', 5000); // refresh div after 5 secs
+										</script>
+    					
 
 									
 
                             <a href="metadata.php">
                                 <div class="panel-footer">
-                                    <span class="pull-left">Export Metadata</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
+                                    <span class="btn btn-lg btn-primary">View Full Mission Metadata</span>
                                 </div>
                             </a>
                         </div>
-                   
-					<button type="button" class="btn btn-lg" padding:"20">Mark Point of Interest</button>
-					
+ <!-- Found Objects Section-->     
+	<!-- Trigger Object Found --> 
+					<button type="button" class="btn btn-lg btn-primary" padding:"20">Mark Point of Interest</button>
+	<!-- Display # objects found -->					
 						<div class="table-responsive" class col-lg-6>
-								<table class="table table-hover">                                
-									<tbody>
-										<tr>
-											<td>Objects Found</td>
-											<td>4</td>                                       
-										</tr>
-									</tbody>
-								</table>						
+							<table class="table table-hover">                                
+								<tbody>
+									<tr>
+										<td>Objects Found</td>
+										<td>4</td>                                       
+									</tr>
+								</tbody>
+							</table>						
 						</div>
+	<!-- Display location of objects found
+		Time | Depth | Lat | Lon  -->
+						<?php
+							$row = 1;
+							if (($handle = fopen("./targetList.csv", "r")) !== FALSE) {
+							   
+								echo '<table class="table table-hover">';
+							   
+								while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+									$num = count($data);
+									if ($row == 1) {
+										echo '<thead><tr>';
+									}else{
+										echo '<tr>';
+									}
+								   
+									for ($c=0; $c < $num; $c++) {
+										//echo $data[$c] . "<br />\n";
+										if(empty($data[$c])) {
+										   $value = "&nbsp;";
+										}else{
+										   $value = $data[$c];
+										}
+										if ($row == 1) {
+											echo '<th>'.$value.'</th>';
+										}else{
+											echo '<td>'.$value.'</td>';
+										}
+									}
+									
+									if ($row == 1) {
+										echo '</tr></thead><tbody>';
+									}else{
+										echo '</tr>';
+									}
+									$row++;
+								}	
+								
+								echo '</tbody></table>';
+								fclose($handle);
+							}
+						?>
 					
 					</div>
 
