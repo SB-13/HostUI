@@ -175,7 +175,7 @@
 									<h3 class = "panel-title"> <i class="fa fa-long-arrow-right"></i>  Telemetry Data</h3>
                                 </div>
                             </div>      
-                        <div id = "result" class="table"></div>     							
+                        <div id = "telemTable" class="table"></div>     							
 						<script
 											src="https://code.jquery.com/jquery-3.0.0.slim.js"
 											integrity="sha256-Gp6hp0H+A7axg1tErCucWeOc38irtkVWpUbBZSj8KCg="
@@ -183,14 +183,11 @@
 										</script>
 										<script>
 										function autoRefresh_div(){
-											  $("#result").load("importMetada.php");// a function which will load data from other file after x seconds
+											  $("#telemTable").load("importMetada.php");// a function which will load data from other file after x seconds
 										  }
  
-										setInterval('autoRefresh_div()', 5000); // refresh div after 5 secs
+										setInterval('autoRefresh_div()', 3000); // refresh div after 3 secs
 										</script>
-    					
-
-									
 
                             <a href="metadata.php">
                                 <div class="panel-footer">
@@ -200,7 +197,7 @@
                         </div>
  <!-- Found Objects Section-->     
 	<!-- Trigger Object Found --> 
-					<button type="button" class="btn btn-lg btn-primary" padding:"20">Mark Point of Interest</button>
+					<button type="button" class="btn btn-lg btn-primary" onclick="recordTarget()" padding:"20">Mark Point of Interest</button>
 	<!-- Display # objects found -->					
 						<div class="table-responsive" class col-lg-6>
 							<table class="table table-hover">                                
@@ -214,47 +211,13 @@
 						</div>
 	<!-- Display location of objects found
 		Time | Depth | Lat | Lon  -->
-						<?php
-							$row = 1;
-							if (($handle = fopen("./targetList.csv", "r")) !== FALSE) {
-							   
-								echo '<table class="table table-hover">';
-							   
-								while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-									$num = count($data);
-									if ($row == 1) {
-										echo '<thead><tr>';
-									}else{
-										echo '<tr>';
-									}
-								   
-									for ($c=0; $c < $num; $c++) {
-										//echo $data[$c] . "<br />\n";
-										if(empty($data[$c])) {
-										   $value = "&nbsp;";
-										}else{
-										   $value = $data[$c];
-										}
-										if ($row == 1) {
-											echo '<th>'.$value.'</th>';
-										}else{
-											echo '<td>'.$value.'</td>';
-										}
-									}
-									
-									if ($row == 1) {
-										echo '</tr></thead><tbody>';
-									}else{
-										echo '</tr>';
-									}
-									$row++;
-								}	
-								
-								echo '</tbody></table>';
-								fclose($handle);
-							}
-						?>
-					
+					<div id="ObofInterest"></div>
+
+					<script>
+						function recordTarget(){							
+							  $("#ObofInterest").load("buildTargetCSV.php");
+						  }
+					</script>
 					</div>
 
             </div>
