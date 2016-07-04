@@ -71,11 +71,7 @@
                     <div class="col-lg-6">   
 					
 <!--Pi video stream-->
-
-      <input id="toggle_display" type="button" class="btn btn-primary" value="Simple" style="position:absolute;top:60px;right:10px;" onclick="set_display(this.value);">
-      <div class="container-fluid text-center liveimage">
-         <div><img id="mjpeg_dest"   onclick="toggle_fullscreen(this);" src="./loading.jpg"></div>
-      </div>
+<iframe width="600" height="500" src="http://172.20.10.11/picam/" frameborder="0" allowfullscreen></iframe> 
 <!-- End Pi Video Stream-->
 <!--GPS Map-->
 
@@ -162,31 +158,53 @@
 			});
 		</script>
 		<!-- <textarea id="coordstoput" rows="2" cols="30"></textarea> -->
-		<img src="images/offline.png" id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlenghth="15" placeholder="Rasp Pi IP Address" name="ip" id="ip">
+		<img src="images/offline.png" id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlengh="15" placeholder="Rasp Pi IP Address" name="ip" id="ip">
 		<input type="button" value="Track" id="startTrack">
 
 <!-- End GPS Map -->
 				
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4">					
                         <div class="panel panel-grey">
-                            <div class="panel-heading">
-                                <div class="row">
-									<h3 class = "panel-title"> <i class="fa fa-long-arrow-right"></i>  Telemetry Data</h3>
-                                </div>
-                            </div>      
-                        <div id = "telemTable" class="table"></div>     							
+							<!-- Start building CSV --> 
+					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(1)" padding:"20">Start Collecting Telemetry Metadata</button>
+					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(0)" padding:"20">Stop Collecting Telemetry Metadata</button>
+
+					<div id="BuildCSV"></div>
 						<script
 											src="https://code.jquery.com/jquery-3.0.0.slim.js"
 											integrity="sha256-Gp6hp0H+A7axg1tErCucWeOc38irtkVWpUbBZSj8KCg="
 											crossorigin="anonymous">
 										</script>
+					<script>
+						function autoBuildCSV($bool){	
+						
+echo $bool;						
+							if ($bool == 1){
+							  $("#BuildCSV").load("buildCSV.php");
+							  echo "true";
+							}
+							else {
+								echo "false";
+							}
+						  }
+						  
+						  setInterval('autoBuildCSV()', 4000); // refresh div after 3 secs
+					</script>
+<!-- end-->
+                            <div class="panel-heading">
+                                <div class="row">
+									<h3 class = "panel-title" padding="20"> <i class="fa fa-long-arrow-right"></i>  Telemetry Data</h3>
+                                </div>
+                            </div>      
+                        <div id = "telemTable" class="table"></div>     							
+
 										<script>
 										function autoRefresh_div(){
 											  $("#telemTable").load("importMetada.php");// a function which will load data from other file after x seconds
 										  }
  
-										setInterval('autoRefresh_div()', 3000); // refresh div after 3 secs
+										setInterval('autoRefresh_div()', 4000); // refresh div after 3 secs
 										</script>
 
                             <a href="metadata.php">
