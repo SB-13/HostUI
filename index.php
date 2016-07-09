@@ -47,6 +47,14 @@
 				height: 28px;
 				border-radius: 3px;
 				width: 100px;
+				
+			div.transbox {
+				margin: 30px;
+				background-color: #ffffff;
+				border: 1px solid black;
+				opacity: 0.6;
+				filter: alpha(opacity=60); /* For IE8 and earlier */
+}
 			}
 		</style>
 		<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
@@ -71,7 +79,17 @@
                     <div class="col-lg-6">   
 					
 <!--Pi video stream-->
-<iframe width="600" height="500" src="http://172.20.10.11/picam/" frameborder="0" allowfullscreen></iframe> 
+<script src="colorbox_folder/jquery.colorbox.js"></script>
+<link rel="stylesheet" href="colorbox_folder/colorbox.css" />
+
+ <a href="http://www.google.com" onclick="callingIframe()">Go to Google</a>
+ <script>
+ function callingIframe()
+{
+  $(".iframe").colorbox({iframe:true,onClosed:function(){ location.reload(true); },             width:"940", height:"650"});
+}
+ </script>
+<iframe width="600" height="500" src="http://172.20.10.11/picam/" frameborder="0" allowfullscreen> <div class ="transbox"><p>text</p></div></iframe> 
 <!-- End Pi Video Stream-->
 <!--GPS Map-->
 
@@ -82,7 +100,7 @@
 			mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 			L.tileLayer ('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '© ' + mapLink + ' Contributors',
-				maxZoom: 18,
+				maxZoom: 21,
 			}).addTo(map);
 			var ongoing = 1;
 			$(document).ready(function() {
@@ -157,8 +175,8 @@
 				};
 			});
 		</script>
-		<!-- <textarea id="coordstoput" rows="2" cols="30"></textarea> -->
-		<img src="images/offline.png" id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlengh="15" placeholder="Rasp Pi IP Address" name="ip" id="ip">
+	<textarea id="coordstoput" rows="2" cols="30"></textarea>
+	<img id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlengh="15" placeholder="Rasp Pi IP Address" name="ip" id="ip">
 		<input type="button" value="Track" id="startTrack">
 
 <!-- End GPS Map -->
@@ -167,8 +185,8 @@
                     <div class="col-lg-4">					
                         <div class="panel panel-grey">
 							<!-- Start building CSV --> 
-					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(1)" padding:"20">Start Collecting Telemetry Metadata</button>
-					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(0)" padding:"20">Stop Collecting Telemetry Metadata</button>
+					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(0)" padding:"20">Start Collecting Telemetry Metadata</button>
+					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(1)" padding:"20">Stop Collecting Telemetry Metadata</button>
 
 					<div id="BuildCSV"></div>
 						<script
@@ -177,19 +195,19 @@
 											crossorigin="anonymous">
 										</script>
 					<script>
-						function autoBuildCSV($bool){	
-						
-echo $bool;						
-							if ($bool == 1){
-							  $("#BuildCSV").load("buildCSV.php");
-							  echo "true";
-							}
+						function autoBuildCSV(bool){	
+										
+							if (bool == 1){
+							}							
 							else {
-								echo "false";
+							  $("#BuildCSV").load("buildCSV.php");
+							 // document.getElementById("BuildCSV").innerHTML = "true";
 							}
+							
 						  }
 						  
 						  setInterval('autoBuildCSV()', 4000); // refresh div after 3 secs
+						  
 					</script>
 <!-- end-->
                             <div class="panel-heading">
@@ -222,7 +240,7 @@ echo $bool;
 								<tbody>
 									<tr>
 										<td>Objects Found</td>
-										<td>4</td>                                       
+										<td>0</td>                                       
 									</tr>
 								</tbody>
 							</table>						
