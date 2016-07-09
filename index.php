@@ -79,6 +79,7 @@
                     <div class="col-lg-6">   
 					
 <!--Pi video stream-->
+<!--
 <script src="colorbox_folder/jquery.colorbox.js"></script>
 <link rel="stylesheet" href="colorbox_folder/colorbox.css" />
 
@@ -88,7 +89,7 @@
 {
   $(".iframe").colorbox({iframe:true,onClosed:function(){ location.reload(true); },             width:"940", height:"650"});
 }
- </script>
+ </script>-->
 <iframe width="600" height="500" src="http://172.20.10.11/picam/" frameborder="0" allowfullscreen> <div class ="transbox"><p>text</p></div></iframe> 
 <!-- End Pi Video Stream-->
 <!--GPS Map-->
@@ -175,7 +176,7 @@
 				};
 			});
 		</script>
-	<textarea id="coordstoput" rows="2" cols="30"></textarea>
+	<div id="coordstoput" rows="2" cols="30"></div>
 	<img id="status" style="vertical-align:middle;"> <input type="text" size="15" maxlengh="15" placeholder="Rasp Pi IP Address" name="ip" id="ip">
 		<input type="button" value="Track" id="startTrack">
 
@@ -240,7 +241,7 @@
 								<tbody>
 									<tr>
 										<td>Objects Found</td>
-										<td>0</td>                                       
+										<td>3</td>                                       
 									</tr>
 								</tbody>
 							</table>						
@@ -250,8 +251,10 @@
 					<div id="ObofInterest"></div>
 
 					<script>
+					$numObjects = 0;
 						function recordTarget(){							
 							  $("#ObofInterest").load("buildTargetCSV.php");
+							  $numObjects++;
 						  }
 					</script>
 					</div>
