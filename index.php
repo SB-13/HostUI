@@ -48,14 +48,28 @@
 				border-radius: 3px;
 				width: 100px;
 				
-			div.transbox {
-				margin: 30px;
-				background-color: #ffffff;
-				border: 1px solid black;
-				opacity: 0.6;
-				filter: alpha(opacity=60); /* For IE8 and earlier */
-}
+			 #video-container {
+				text-align: center;
+				height: 400px;
+				line-height:400px;//should be equal to the height
+				position: relative;
+				left: 100px;
+				top: 150px;
+				z-index: 1;
 			}
+
+			#custom-message {
+				position: absolute; 
+				left: 75px;
+				top: 0px;
+				width: 600px;
+				height: 400px;
+				z-index: 2;				
+				left: 100px;
+				top: 150px;
+				
+			}
+			<!--background-color: rgba(105,100,100,0.8)-->
 		</style>
 		<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
 
@@ -69,30 +83,33 @@
         <nav class="navbar nav navbar-inverse navbar-fixed-top top-nav" role="navigation">
 			<li padding:"20"><a href="./index.php">Home</a> 
 			<li padding:"20"><a href="./metadata.php">Mission Metadata</a>   
+			<li padding:"20"><a href="./telemetryVideo.php"> Telemetry Overlay Video</a></li>
 			<li padding:"20"><a href="./objectsOfInterest.php">Points of Interest</a></li>
 			<li padding:"20"><a href="./manual/index.php">SB-13 User's Manual</a></li>
-			 <button type="button" class="btn btn-lg btn-danger">ABORT MISSION</button>
+		<!--	 <button type="button" class="btn btn-lg btn-danger">ABORT MISSION</button>-->
         </nav>
 <!-- End Navigation-->
         <div id="page-wrapper">
             <div class="container-fluid">            
-                    <div class="col-lg-6">   
+                     
 					
 <!--Pi video stream-->
-<!--
-<script src="colorbox_folder/jquery.colorbox.js"></script>
-<link rel="stylesheet" href="colorbox_folder/colorbox.css" />
 
- <a href="http://www.google.com" onclick="callingIframe()">Go to Google</a>
- <script>
- function callingIframe()
-{
-  $(".iframe").colorbox({iframe:true,onClosed:function(){ location.reload(true); },             width:"940", height:"650"});
-}
- </script>-->
-<iframe width="600" height="500" src="http://172.20.10.11/picam/" frameborder="0" allowfullscreen> <div class ="transbox"><p>text</p></div></iframe> 
+ <!--<INPUT TYPE = "Text" VALUE ="10.215.231.122" NAME = "rpiIP">
+ <input type="submit" name="submit" value="Start Video" onclick="startVideo()">  
+ <div id = "video"></div>
+  		<script>	
+		function startVideo(){
+			$("#video").load("startVideo.php");
+		}
+  		</script>	-->
+<div class="col-lg-6">  
+<div id="video-container">
+<iframe width="600" height="500" src="http://172.20.10.12" frameborder="0" allowfullscreen></iframe> 
+</div>
 <!-- End Pi Video Stream-->
 <!--GPS Map-->
+
 
 		<div id="map"></div>
 		<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
@@ -101,7 +118,7 @@
 			mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 			L.tileLayer ('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '© ' + mapLink + ' Contributors',
-				maxZoom: 21,
+				maxZoom: 22,
 			}).addTo(map);
 			var ongoing = 1;
 			$(document).ready(function() {
@@ -187,7 +204,7 @@
                         <div class="panel panel-grey">
 							<!-- Start building CSV --> 
 					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(0)" padding:"20">Start Collecting Telemetry Metadata</button>
-					<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(1)" padding:"20">Stop Collecting Telemetry Metadata</button>
+				<!--	<button type="button" class="btn btn-lg btn-primary" onclick="autoBuildCSV(1)" padding:"20">Stop Collecting Telemetry Metadata</button>-->
 
 					<div id="BuildCSV"></div>
 						<script
@@ -236,20 +253,20 @@
 	<!-- Trigger Object Found --> 
 					<button type="button" class="btn btn-lg btn-primary" onclick="recordTarget()" padding:"20">Mark Point of Interest</button>
 	<!-- Display # objects found -->					
-						<div class="table-responsive" class col-lg-6>
+					<!--	<div class="table-responsive" class col-lg-6>
 							<table class="table table-hover">                                
 								<tbody>
 									<tr>
 										<td>Objects Found</td>
-										<td>3</td>                                       
+										<td><?php echo $numObjects ?></td>                                       
 									</tr>
 								</tbody>
 							</table>						
-						</div>
+						</div>-->
 	<!-- Display location of objects found
 		Time | Depth | Lat | Lon  -->
 					<div id="ObofInterest"></div>
-
+<?php $numObjects =0; ?>
 					<script>
 					$numObjects = 0;
 						function recordTarget(){							
@@ -264,7 +281,7 @@
 
         </div>
         <!-- /#page-wrapper -->
-
+		
     </div>
     <!-- /#wrapper -->
 

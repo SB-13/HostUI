@@ -23,11 +23,14 @@
 	<!-- copied from bootstrap tables-->
 	    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap-table/src/bootstrap-table.css">
+	
     <link rel="stylesheet" href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
     <link rel="stylesheet" href="assets/examples.css
 		<link href ="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
     <script src="assets/jquery.min.js"></script>
 		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script src="assets/bootstrap-table/src/extensions/export/bootstrap-table-export.js"></script>
+        <script src ="http://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="ga.js"></script>
 	    <!-- Bootstrap Core CSS -->
@@ -73,7 +76,7 @@
 			<li padding:"20"><a href="./metadata.php">Mission Metadata</a>   
 			<li padding:"20"><a href="./objectsOfInterest.php">Points of Interest</a></li>
 			<li padding:"20"><a href="./manual/index.php">SB-13 User's Manual</a></li>
-			 <button type="button" class="btn btn-lg btn-danger">ABORT MISSION</button>
+			<!-- <button type="button" class="btn btn-lg btn-danger">ABORT MISSION</button>-->
         </nav>
 <!-- End Navigation-->
 		<div id="page-wrapper">
@@ -89,19 +92,19 @@
 					  class = "table"
 					  data-toggle ="table"
 					   data-toolbar="#toolbar"
-					   data-search="true"
+					   data-search="false"
 					   data-show-refresh="true"
 					   data-show-toggle="true"
 					   data-show-columns="true"
 					   data-show-export="true"
-					   data-detail-view="true"
+					   data-detail-view="false"
 					   data-detail-formatter="detailFormatter"
 					   data-minimum-count-columns="2"
 					   data-show-pagination-switch="true"
 					   data-pagination="true"
 					   data-id-field="id"
 					   data-page-list="[10, 25, 50, 100, ALL]"
-					   data-show-footer="false"
+					   data-show-footer="true"
 					   data-side-pagination="server"
 					   data-url="./metadataInput.csv"
 					   data-response-handler="responseHandler">
@@ -182,6 +185,7 @@
 
     function initTable() {
         $table.bootstrapTable({
+			 showExport: true,
             height: getHeight(),
             columns: [
                 [
